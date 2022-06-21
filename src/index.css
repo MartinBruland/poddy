@@ -3,5 +3,18 @@ body, header, main, section, div, h1, h2, h3, p, a, ul, ol, li, button {
     padding: 0;
     text-decoration: none;
     list-style: none;
-  }
-  
+    font-family: sans-serif;
+}
+
+
+body {
+  background: #282c34;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}

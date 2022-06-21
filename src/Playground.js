@@ -1,8 +1,7 @@
 import React, {useState} from 'react';
-import './DashboardApp.css';
 
 
-function DashboardApp() {
+function Playground() {
 
   return (
     <App1 username="Martin" />
@@ -14,7 +13,7 @@ function DashboardApp() {
 
 // ES6 ARROW FUNCTION - SIMPLE COMPONENT
 const WelcomeMessage = (props) => {
-  return <h1>Hello {props.username ?? "DefaultUser"}</h1>
+  return <h1>Hello {props.username ?? "Default User"}</h1>
 }
 
 
@@ -59,13 +58,15 @@ class App2 extends React.Component {
       counter: 0
     };
 
+    this.increaseMethod = this.increaseMethod.bind(this);
+    this.decreaseMethod = this.decreaseMethod.bind(this);
   };
 
-  increaseMethod = () => {
+  increaseMethod() {
     this.setState({counter: this.state.counter + 1});
   }
 
-  decreaseMethod = () => {
+  decreaseMethod() {
     this.setState({counter: this.state.counter - 1});
   }
 
@@ -84,4 +85,4 @@ class App2 extends React.Component {
 }
 
 
-export default DashboardApp;
+export default Playground;

@@ -1,6 +1,6 @@
 import React from 'react'
 import { handleIncomingRedirect, login, fetch, getDefaultSession, logout } from '@inrupt/solid-client-authn-browser'
-import { getSolidDataset, getStringNoLocale, getThing, getThingAll, saveSolidDatasetAt, getFile } from "@inrupt/solid-client";
+import { getSolidDataset, getStringNoLocale, getThing, getThingAll, saveSolidDatasetAt, getFile, getNamedNode, getUrl } from "@inrupt/solid-client";
 
 import Home from '../pages/home/Home';
 import Startpage from '../pages/startpage/Startpage';
@@ -17,6 +17,7 @@ class PoddyBackend extends React.Component {
             webID: '',
             podURL: '',
             username: '',
+            picture: '',
             isLoggedIn: false,
             appData: {}
         };
@@ -47,12 +48,17 @@ class PoddyBackend extends React.Component {
         }).then( async () => {
 
             const predicateUsername = 'http://www.w3.org/2006/vcard/ns#fn';
+            const predicatePicture = 'http://www.w3.org/2006/vcard/ns#hasPhoto';
 
             const profileCard = await this.getData(localWebID);
             const thing = getThing(profileCard, localWebID);
 
+
             const username = getStringNoLocale(thing, predicateUsername);
             this.setState({username: username});
+
+            const picture = getUrl(thing, predicatePicture);
+            this.setState({picture: picture});
 
         })
         
@@ -116,7 +122,7 @@ class PoddyBackend extends React.Component {
     render() {
 
         if (getDefaultSession().info.isLoggedIn) {
-            return <Home username={this.state.username} logoutMethod={this.logoutUser} />
+            return <Home username={this.state.username} picture={this.state.picture} logoutMethod={this.logoutUser} />
         }
 
         return <Startpage loginMethod={this.loginUser} />

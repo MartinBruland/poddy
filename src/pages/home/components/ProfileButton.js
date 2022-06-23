@@ -20,21 +20,21 @@ const ProfileButton = (props) => {
             'justifyContent': 'flex-start',
             'alignItems': 'center',
             'width': '200px',
-            'height': '40px',
-            'color': '#d0d5df',
             'background': '#282c34',
+            'cursor': 'pointer',
+            'padding': '5px',
             'borderRadius': '25px',
-            'cursor': 'pointer'
-        },
-        'img': {
-            'color': 'white'
         },
         'p': {
-            'color': '#d0d5df',
             'width': '100%',
             'textAlign': 'center',
             'fontWeight': 'bold',
             'letterSpacing': '1.2px'
+        },
+        'img': {
+            'width': '30px',
+            'height': '30px',
+            'clipPath': 'circle(50%)',
         },
         'dropdown': {
             'position': 'absolute',
@@ -53,7 +53,6 @@ const ProfileButton = (props) => {
             'height': '30px',
             'cursor': 'pointer',
             'background': '#282c34',
-            'color': '#d0d5df',
             'marginBottom': '5px',
             'borderRadius': '12px'
         }
@@ -73,11 +72,12 @@ const ProfileButton = (props) => {
     return (
         <div style={style.container} onMouseOver={handleHover} onMouseOut={onMouseLeaveHander} >
             <button style={style.button}>
-                <img style={style.img} href={props.image} alt=''></img>
+                <img style={style.img} src={props.picture} alt=''></img>
                 <p style={style.p}>{props.username ?? 'Default User'}</p>
             </button>
 
             <div style={style.dropdown} id='dropdownContainer'>
+
                 <button style={style.dropdownBttn}>Settings</button>
                 <button style={style.dropdownBttn} onClick={() => props.logoutMethod()}>Logout</button>
             </div>

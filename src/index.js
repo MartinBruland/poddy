@@ -10,10 +10,10 @@ import './index.css';
 import PoddyBackend from './backend/PoddyBackend';
 import Home from './pages/home/Home';
 import Bookmarks from './pages/bookmarks/Bookmarks';
-import Playground from './Playground'
 import Startpage from './pages/startpage/Startpage';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
 root.render(
   <BrowserRouter>
     <Routes>

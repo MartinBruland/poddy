@@ -1,8 +1,9 @@
 import React from 'react'
-import { handleIncomingRedirect, login, fetch, getDefaultSession } from '@inrupt/solid-client-authn-browser'
-import { getSolidDataset, saveSolidDatasetAt } from "@inrupt/solid-client";
+import { handleIncomingRedirect, login, fetch, getDefaultSession, logout } from '@inrupt/solid-client-authn-browser'
+import { getSolidDataset, getStringNoLocale, getThing, getThingAll, saveSolidDatasetAt, getFile } from "@inrupt/solid-client";
 
 import Home from '../pages/home/Home';
+import Startpage from '../pages/startpage/Startpage';
 
 
 
@@ -30,20 +31,70 @@ class PoddyBackend extends React.Component {
         this.deleteData = this.deleteData.bind(this);
     };
 
-    loginUser() {
+    componentDidMount = async () => {
+
+        let localWebID = '';
+
+        await handleIncomingRedirect().then(() => {
+
+            localWebID = getDefaultSession().info.webId;
+
+            this.setState({isLoggedIn: getDefaultSession().info.isLoggedIn})
+            this.setState({webID: localWebID})
+            this.setState({podURL: localWebID.split('/profile/card#me')[0]})
+
+            
+        }).then( async () => {
+
+            const predicateUsername = 'http://www.w3.org/2006/vcard/ns#fn';
+
+            const profileCard = await this.getData(localWebID);
+            const thing = getThing(profileCard, localWebID);
+
+            const username = getStringNoLocale(thing, predicateUsername);
+            this.setState({username: username});
+
+        })
+        
+    }
+
+
+    loginUser = async (value) => {
+
+        this.setState({podProvider: value});
+
+        if (!getDefaultSession().info.isLoggedIn) {
+            await login({
+              oidcIssuer: value,
+              redirectUrl: window.location.href,
+              clientName: "Poddy"
+            });
+        }
 
     };
 
-    logoutUser() {
+    logoutUser = async () => {
+
+        await logout().then(() => {
+            // reset all states
+            this.setState({podProvider: ''});
+            this.setState({webID: ''});
+            this.setState({podURL: ''});
+            this.setState({username: ''});
+            this.setState({isLoggedIn: false});
+            this.setState({appData: {}});
+        })
 
     };
 
-    getData() {
-
+    getData = async (location) => {
+        const dataset = await getSolidDataset(location, { fetch: fetch });
+        return dataset
     };
 
-    postData() {
-
+    postData = async (location, data) => {
+        const dataset = await saveSolidDatasetAt(location, data, { fetch: fetch });
+        return dataset
     };
 
     createDataset() {
@@ -63,7 +114,13 @@ class PoddyBackend extends React.Component {
     };
 
     render() {
-        return <Home />
+
+        if (getDefaultSession().info.isLoggedIn) {
+            return <Home username={this.state.username} logoutMethod={this.logoutUser} />
+        }
+
+        return <Startpage loginMethod={this.loginUser} />
+        
     }
 
 }

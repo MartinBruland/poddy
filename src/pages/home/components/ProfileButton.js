@@ -21,7 +21,7 @@ const ProfileButton = (props) => {
             'alignItems': 'center',
             'width': '200px',
             'height': '40px',
-            'color': 'white',
+            'color': '#d0d5df',
             'background': '#282c34',
             'borderRadius': '25px',
             'cursor': 'pointer'
@@ -30,9 +30,11 @@ const ProfileButton = (props) => {
             'color': 'white'
         },
         'p': {
-            'color': 'white',
+            'color': '#d0d5df',
             'width': '100%',
-            'textAlign': 'center'
+            'textAlign': 'center',
+            'fontWeight': 'bold',
+            'letterSpacing': '1.2px'
         },
         'dropdown': {
             'position': 'absolute',
@@ -51,7 +53,7 @@ const ProfileButton = (props) => {
             'height': '30px',
             'cursor': 'pointer',
             'background': '#282c34',
-            'color': 'white',
+            'color': '#d0d5df',
             'marginBottom': '5px',
             'borderRadius': '12px'
         }
@@ -77,7 +79,7 @@ const ProfileButton = (props) => {
 
             <div style={style.dropdown} id='dropdownContainer'>
                 <button style={style.dropdownBttn}>Settings</button>
-                <button style={style.dropdownBttn}>Logout</button>
+                <button style={style.dropdownBttn} onClick={() => props.logoutMethod()}>Logout</button>
             </div>
 
         </div>

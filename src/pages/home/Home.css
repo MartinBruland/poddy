@@ -34,9 +34,9 @@ main {
     align-items: center;
 }
 
-h1 {
+main h1 {
     color: #d0d5df;
-    font-size: 38pt;
+    font-size: 34pt;
     letter-spacing: 2px;
     margin-bottom: 50px;
 }

@@ -24,7 +24,7 @@ class Home extends React.Component {
       <div id="home">
         <header>
           <DateWidget />
-          <ProfileButton />
+          <ProfileButton username={this.props.username} logoutMethod={() => this.props.logoutMethod()} />
         </header>
         <main>
         
